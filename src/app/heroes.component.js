@@ -37,13 +37,14 @@ var HeroesComponent = (function () {
     };
     HeroesComponent.prototype.delete = function (hero) {
         var _this = this;
-        this.heroService.delete(hero.id)
+        this.heroService
+            .delete(hero.id)
             .then(function () {
-            return _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+            if (_this.selectedHero === hero) {
+                _this.selectedHero = null;
+            }
         });
-        if (this.selectedHero === hero) {
-            this.selectedHero = null;
-        }
     };
     HeroesComponent.prototype.ngOnInit = function () {
         this.getHeroes();

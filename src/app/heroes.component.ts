@@ -10,6 +10,7 @@ import { HeroService } from './hero.service';
   providers: [HeroService],
 })
 export class HeroesComponent implements OnInit {
+  heroes: Hero[];
   selectedHero: Hero;
 
   constructor(
@@ -36,13 +37,13 @@ export class HeroesComponent implements OnInit {
       });
   }
 
-  delete(hero: Hero): void{
-    this.heroService.delete(hero.id)
-      .then(() =>
-        this.heroes = this.heroes.filter(h => h!== hero);
-        if (this.selectedHero === hero) {
-          this.selectedHero = null;
-        }
+  delete(hero: Hero): void {
+    this.heroService
+        .delete(hero.id)
+        .then(() => {
+          this.heroes = this.heroes.filter(h => h !== hero);
+          if (this.selectedHero === hero) { this.selectedHero = null; }
+        });
   }
   ngOnInit(): void {
     this.getHeroes();
